@@ -1,23 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+
+export const processDoubleArray = (arr) => {
+  return arr.reduce((acc, number) => {
+    acc += acc.length > 0 ? ',' : '';
+    if (!isNaN(number) && number !== '') {
+      acc += parseInt(number) * 2;
+    } else {
+      acc += number;
+    }
+
+    return acc;
+  }, '');
+};
 
 function App() {
+  const [inputArray, setInputArray] = useState();
+  const [outputArray, setOutputtArray] = useState();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="containers">
+        <span>Input</span>
+        Array
+        <input
+          id="input"
+          value={inputArray}
+          onChange={(e) => {
+            const inputArr = e.target.value.replace(/ /g, '');
+            setInputArray(inputArr);
+            const arrSplit = inputArr.split(',');
+            setOutputtArray(processDoubleArray(arrSplit));
+          }}
+        />
+      </div>
+      <div className="containers">
+        <span>Output</span>
+        Double
+        <input
+          id="output"
+          value={outputArray}
+        />
+      </div>
     </div>
   );
 }
